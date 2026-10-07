@@ -1,5 +1,6 @@
 import argparse
 import asyncio
+import logging
 import os
 import pathlib
 import secrets
@@ -9,6 +10,7 @@ from typing import Any
 
 from pymax import (
     Client,
+    ExtraConfig,
     ConsolePasswordProvider,
     ConsoleQrHandler,
     ConsoleSmsCodeProvider,
@@ -110,6 +112,8 @@ async def _finish_login(client: Any, kind: str, phone: str | None = None) -> Non
 async def _login_qr() -> None:
     _ensure_session_dir()
     client = WebClient(
+        # Debug protocol frames can expose session credentials; keep provider telemetry off.
+        extra_config=ExtraConfig(log_level="CRITICAL", telemetry=False),
         work_dir=str(SESSION_DIR),
         session_name=SESSION_FILE,
         qr_provider=ConsoleQrHandler(),
@@ -121,6 +125,8 @@ async def _login_sms(phone: str) -> None:
     _ensure_session_dir()
     client = Client(
         phone=phone,
+        # Debug protocol frames can expose session credentials; keep provider telemetry off.
+        extra_config=ExtraConfig(log_level="CRITICAL", telemetry=False),
         work_dir=str(SESSION_DIR),
         session_name=SESSION_FILE,
         sms_code_provider=ConsoleSmsCodeProvider(),

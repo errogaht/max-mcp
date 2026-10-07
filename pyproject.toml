@@ -5,7 +5,7 @@ description = "Local stdio MCP server exposing MAX messenger (user session) to C
 requires-python = ">=3.11,<3.14"
 dependencies = [
   "mcp[cli]>=1.0",
-  "maxapi-python>=2.1.2",
+  "maxapi-python==2.1.2",
   "pydantic>=2.6",
 ]
 
