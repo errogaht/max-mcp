@@ -83,8 +83,8 @@ def _build_client() -> Any:
         return Client(
             phone=phone,
             # Debug protocol frames can expose session credentials; keep provider telemetry off.
-        extra_config=ExtraConfig(log_level="CRITICAL", telemetry=False),
-        work_dir=str(SESSION_DIR),
+            extra_config=ExtraConfig(log_level="CRITICAL", telemetry=False),
+            work_dir=str(SESSION_DIR),
             session_name=SESSION_FILE,
         )
     return WebClient(work_dir=str(SESSION_DIR), session_name=SESSION_FILE,
